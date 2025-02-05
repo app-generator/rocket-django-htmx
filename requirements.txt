@@ -1,0 +1,27 @@
+# Core
+django==4.2.9
+python-dotenv==1.0.1
+str2bool==1.1
+
+# Utils
+django-debug-toolbar==4.2.0
+Pillow==11.1.0
+
+# Services
+celery==5.3.4
+redis==5.0.1
+hiredis==3.1.0
+
+# Tooling
+django-celery-results==2.5.1
+djangorestframework==3.14.0
+django-api-generator==1.0.17
+drf-spectacular==0.26.5
+
+# Deployment
+whitenoise==6.5.0
+gunicorn==21.2.0
+
+# DB Layer
+# psycopg2-binary==3.1.12
+# mysqlclient==2.2.0
