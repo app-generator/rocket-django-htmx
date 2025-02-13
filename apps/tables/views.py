@@ -8,6 +8,17 @@ from apps.tables.utils import product_filter
 
 # Create your views here.
 
+def products_list(request):
+    filters = product_filter(request)
+    product_list = Product.objects.filter(**filters)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(product_list, 5)
+    products = paginator.page(page)
+
+    return render(request, "partials/products_list.html", {"products": products})
+
+
 def datatables(request):
   filters = product_filter(request)
   product_list = Product.objects.filter(**filters)
@@ -16,11 +27,6 @@ def datatables(request):
   page = request.GET.get('page', 1)
   paginator = Paginator(product_list, 5)
   products = paginator.page(page)
-
-  if request.method == 'POST':
-      form = ProductForm(request.POST)
-      if form.is_valid():
-          return post_request_handling(request, form)
 
   context = {
     'segment'  : 'datatables',
@@ -32,17 +38,24 @@ def datatables(request):
   return render(request, 'apps/datatables.html', context)
 
 
-
 @login_required(login_url='/users/signin/')
-def post_request_handling(request, form):
-    form.save()
-    return redirect(request.META.get('HTTP_REFERER'))
+def add_product(request):
+    form = ProductForm(request.POST)
+    if form.is_valid():
+        product = form.save()
+
+        return render(request, 'partials/product_row.html', { 'product': product })
+    else:
+        return HttpResponse("")
+
+    # return products_list(request)  
+
 
 @login_required(login_url='/users/signin/')
 def delete_product(request, id):
     product = Product.objects.get(id=id)
     product.delete()
-    return redirect(request.META.get('HTTP_REFERER'))
+    return HttpResponse("")
 
 
 @login_required(login_url='/users/signin/')
@@ -53,4 +66,8 @@ def update_product(request, id):
         product.price = int(request.POST.get('price'))
         product.info = request.POST.get('info')
         product.save()
-    return redirect(request.META.get('HTTP_REFERER'))
+
+        return render(request, 'partials/product_row.html', { 'product': product })
+    
+    # return products_list(request)
+    return render(request, 'partials/product_row.html', { 'product': product })

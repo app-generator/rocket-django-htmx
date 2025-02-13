@@ -45,6 +45,8 @@ INTERNAL_IPS = [
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
+    
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -66,6 +68,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken', 
     'drf_spectacular',
     'django_api_gen',
+    'django_htmx',
 
     "debug_toolbar",
 ]
@@ -80,6 +83,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
