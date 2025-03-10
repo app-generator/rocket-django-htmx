@@ -196,7 +196,7 @@
         </div>
         <!-- Modal body -->
         <div class="p-4 md:p-5 space-y-4">
-          <form method="post">
+          <form class="form" method="post">
             {% csrf_token %}
 
             {% for field in form %}
@@ -209,11 +209,15 @@
             <button 
               type="button" 
               hx-post="{% url 'add_product' %}"
-              hx-target="#products-table tbody"
-              hx-swap="beforeend"
+              hx-target="#products-container"
+              hx-swap="innerHTML"
               hx-include="closest form"
               hx-on="htmx:afterRequest: 
-                  document.querySelector('[data-modal-hide=&quot;add-product&quot;]').click();"
+                const addProductModal = document.getElementById('add-product');
+                if (addProductModal && addProductModal._modalInstance) {
+                    addProductModal.querySelector('form').reset();
+                    addProductModal._modalInstance.hide();
+                }"
               class="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Add Product
@@ -225,14 +229,52 @@
     </div>
   </div>
 
-
 </main>
-
-<script>
-  document.body.addEventListener('htmx:swapError', function(evt) {
-    console.error("HTMX swapError event:", evt.detail);
-});
-</script>
 
 {% endblock content %}
 
+{% block extra_js %}
+
+<script>
+  document.body.addEventListener('htmx:afterSwap', function () {
+    console.log("htmx:afterSwap triggered");
+
+    document.querySelectorAll('[data-modal-hide]').forEach(trigger => {
+      trigger.addEventListener('click', function () {
+          const targetId = trigger.getAttribute('data-modal-hide');
+          const targetModal = document.getElementById(targetId);
+
+          if (targetModal && targetModal._modalInstance) {
+              console.log(`Hiding modal: ${targetId}`);
+              targetModal._modalInstance.hide(); // Hide the modal
+          } else {
+              console.error(`Modal not found or not initialized: ${targetId}`);
+          }
+      });
+  });
+    
+    document.querySelectorAll('[data-modal-toggle]').forEach(trigger => {
+        const targetId = trigger.getAttribute('data-modal-target');
+        const targetModal = document.getElementById(targetId);
+
+        if (targetModal) {
+            if (targetModal._modalInstance) {
+                console.log(`Destroying old modal instance for ${targetId}`);
+                targetModal._modalInstance.hide();
+                delete targetModal._modalInstance;
+            }
+
+            targetModal._modalInstance = new Modal(targetModal);
+            trigger.addEventListener('click', function () {
+                console.log(`Opening modal: ${targetId}`);
+                targetModal._modalInstance.show();
+            });
+        } else {
+            console.error(`Modal not found for target: ${targetId}`);
+        }
+    });
+  });
+</script>
+
+
+{% endblock extra_js %}

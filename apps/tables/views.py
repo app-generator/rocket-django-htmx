@@ -43,8 +43,9 @@ def add_product(request):
     form = ProductForm(request.POST)
     if form.is_valid():
         product = form.save()
-
-        return render(request, 'partials/product_row.html', { 'product': product })
+        filters = product_filter(request)
+        product_list = Product.objects.filter(**filters)
+        return render(request, 'partials/products_list.html', {'products': product_list})
     else:
         return HttpResponse("")
 
@@ -66,8 +67,7 @@ def update_product(request, id):
         product.price = int(request.POST.get('price'))
         product.info = request.POST.get('info')
         product.save()
-
-        return render(request, 'partials/product_row.html', { 'product': product })
-    
-    # return products_list(request)
-    return render(request, 'partials/product_row.html', { 'product': product })
+        filters = product_filter(request)
+        product_list = Product.objects.filter(**filters)
+        return render(request, 'partials/products_list.html', {'products': product_list})
+    return render(request, 'partials/product_row.html', {'product': product})
