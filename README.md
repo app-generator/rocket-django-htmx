@@ -1,6 +1,6 @@
 # [Django Rocket](https://app-generator.dev/product/rocket/django/) `htmx`
 
-Open-source **[Django Template styled with Tailwind CSS and Flowbite](https://app-generator.dev/product/rocket/django/)**.The product is designed to deliver the best possible developer experience with highly customizable feature-rich pages. 
+Open-source starter powered by **Django**, **Tailwind** and **HTMX**. The product is designed to deliver the best possible developer experience with highly customizable feature-rich pages. 
 
 A common set of features is provided out-of-the-box: **API, DataTables, Charts, Extended User Model, and Docker Support** under a permissive MIT License (**unrestricted usage in hobby or commercial projects**).
 
@@ -21,7 +21,7 @@ A common set of features is provided out-of-the-box: **API, DataTables, Charts, 
 - Styling: **Tailwind CSS/Flowbite**
 - **Extended User Model**
 - [Charts](https://rocket-django.onrender.com/charts/) via ApexJS
-- [DataTables](https://rocket-django.onrender.com/tables/) 
+- [DataTables](https://rocket-django.onrender.com/tables/) via `HTMX`
 - [API](https://rocket-django.onrender.com/api/product/)
 - Can be used with **SQLite**, **MySql**, **PostgreSQL**, **MsSql**
 - **Docker**
