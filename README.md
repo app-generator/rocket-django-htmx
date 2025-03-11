@@ -1,4 +1,4 @@
-# [Django Rocket](https://app-generator.dev/product/rocket/django/)
+# [Django Rocket](https://app-generator.dev/product/rocket/django/) `htmx`
 
 Open-source **[Django Template styled with Tailwind CSS and Flowbite](https://app-generator.dev/product/rocket/django/)**.The product is designed to deliver the best possible developer experience with highly customizable feature-rich pages. 
 
