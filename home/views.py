@@ -10,7 +10,6 @@ def index(request):
   }
   return render(request, "dashboard/index.html", context)
 
-@login_required(login_url='/users/signin/')
 def starter(request):
 
   context = {}
