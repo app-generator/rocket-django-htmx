@@ -3,3 +3,45 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <script src="{% static 'dist/main.bundle.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/datepicker.min.js"></script>
+
+
+<script>
+    document.body.addEventListener('htmx:afterSwap', function () {
+      console.log("htmx:afterSwap triggered");
+  
+      document.querySelectorAll('[data-modal-hide]').forEach(trigger => {
+        trigger.addEventListener('click', function () {
+            const targetId = trigger.getAttribute('data-modal-hide');
+            const targetModal = document.getElementById(targetId);
+  
+            if (targetModal && targetModal._modalInstance) {
+                console.log(`Hiding modal: ${targetId}`);
+                targetModal._modalInstance.hide(); // Hide the modal
+            } else {
+                console.error(`Modal not found or not initialized: ${targetId}`);
+            }
+        });
+    });
+      
+      document.querySelectorAll('[data-modal-toggle]').forEach(trigger => {
+          const targetId = trigger.getAttribute('data-modal-target');
+          const targetModal = document.getElementById(targetId);
+  
+          if (targetModal) {
+              if (targetModal._modalInstance) {
+                  console.log(`Destroying old modal instance for ${targetId}`);
+                  targetModal._modalInstance.hide();
+                  delete targetModal._modalInstance;
+              }
+  
+              targetModal._modalInstance = new Modal(targetModal);
+              trigger.addEventListener('click', function () {
+                  console.log(`Opening modal: ${targetId}`);
+                  targetModal._modalInstance.show();
+              });
+          } else {
+              console.error(`Modal not found for target: ${targetId}`);
+          }
+      });
+    });
+</script>

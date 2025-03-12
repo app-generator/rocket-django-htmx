@@ -5,7 +5,7 @@ from django.views.generic import CreateView
 from apps.common.models import Product
 from apps.users.models import Profile
 from apps.users.forms import SigninForm, SignupForm, UserPasswordChangeForm, UserSetPasswordForm, UserPasswordResetForm, ProfileForm
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login as auth_login
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
@@ -13,6 +13,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from apps.users.utils import user_filter
+from django.views.generic import FormView
+from apps.tables.views import datatables
 
 # Create your views here.
 
@@ -27,14 +29,46 @@ def index(request):
 
 
 
-class SignInView(LoginView):
+# class SignInView(LoginView):
+#     form_class = SigninForm
+#     template_name = "authentication/sign-in.html"
+
+class SignInView(FormView):
     form_class = SigninForm
     template_name = "authentication/sign-in.html"
+
+    def form_valid(self, form):
+        user = form.get_user()
+        auth_login(self.request, user)
+
+        if self.request.headers.get('HX-Request') == 'true':
+            return render(self.request, "dashboard/index.html", {'segment': 'dashboard'})
+
+    def form_invalid(self, form):
+        if self.request.headers.get('HX-Request') == 'true':
+            return render(self.request, self.template_name, {'form': form})
+
+        return super().form_invalid(form)
 
 class SignUpView(CreateView):
     form_class = SignupForm
     template_name = "authentication/sign-up.html"
     success_url = "/users/signin/"
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        if self.request.headers.get('HX-Request') == 'true':
+            return render(self.request, "authentication/sign-in.html", {'form': SigninForm()})
+
+        return response
+
+    def form_invalid(self, form):
+        if self.request.headers.get('HX-Request') == 'true':
+            return render(self.request, self.template_name, {'form': form})
+
+        return super().form_invalid(form)
+
 
 class UserPasswordChangeView(PasswordChangeView):
     template_name = 'authentication/password-change.html'

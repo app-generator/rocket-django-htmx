@@ -5,6 +5,7 @@ from apps.common.models import Product
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from apps.tables.utils import product_filter
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -52,6 +53,7 @@ def add_product(request):
     # return products_list(request)  
 
 
+@csrf_exempt
 @login_required(login_url='/users/signin/')
 def delete_product(request, id):
     product = Product.objects.get(id=id)
@@ -69,5 +71,5 @@ def update_product(request, id):
         product.save()
         filters = product_filter(request)
         product_list = Product.objects.filter(**filters)
-        return render(request, 'partials/products_list.html', {'products': product_list})
+        return render(request, 'partials/product_row.html', {'product': product})
     return render(request, 'partials/product_row.html', {'product': product})

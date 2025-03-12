@@ -23,7 +23,8 @@
         type="button" 
         data-modal-target="edit-product-{{ product.id }}" 
         data-modal-toggle="edit-product-{{ product.id }}" 
-        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-primary-800"
+        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg {% if not request.user.is_authenticated %} bg-blue-400 dark:bg-blue-500 cursor-not-allowed {% else %} bg-blue-700 dark:bg-blue-600 hover:bg-blue-800 dark:hover:bg-blue-700 {% endif %} focus:ring-4 focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-primary-800"
+        {% if not request.user.is_authenticated %} disabled {% endif %}
       >
         Update
       </button>
@@ -31,7 +32,8 @@
         type="button"
         data-modal-target="delete-product-{{ product.id }}" 
         data-modal-toggle="delete-product-{{ product.id }}" 
-        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
+        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg {% if not request.user.is_authenticated %} bg-red-400 dark:bg-red-500 cursor-not-allowed {% else %} bg-red-700 dark:bg-red-600 hover:bg-red-800 dark:hover:bg-red-700 {% endif %} focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
+        {% if not request.user.is_authenticated %} disabled {% endif %} 
       >
         Delete
       </button>
