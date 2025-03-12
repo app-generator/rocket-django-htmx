@@ -5,7 +5,7 @@ Open-source starter powered by **Django**, **Tailwind** and **HTMX**. The produc
 A common set of features is provided out-of-the-box: **API, DataTables, Charts, Extended User Model, and Docker Support** under a permissive MIT License (**unrestricted usage in hobby or commercial projects**).
 
 - 👉 [Django Rocket](https://app-generator.dev/product/rocket-htmx/django/) - `Product Page`
-- 👉 [Django Rocket](https://rocket-django.onrender.com) - `LIVE Demo` 
+- 👉 [Django Rocket](https://rocket-django-htmx.onrender.com) - `LIVE Demo` 
 - 👉 [Django Rocket Documentation](https://app-generator.dev/docs/products/django/rocket-htmx/index.html) - `Complete Information` and Support Links
   - [Getting Started with Django](https://app-generator.dev/docs/technologies/django/index.html) - a `comprehensive tutorial`
   - `Configuration`: Install Tailwind/Flowbite, Prepare Environment, Setting up the Database 
