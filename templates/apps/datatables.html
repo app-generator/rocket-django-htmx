@@ -97,10 +97,11 @@
           </div>
         </div>
         <button
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-primary-800"
+          class="text-white {% if not request.user.is_authenticated %} bg-blue-400 dark:bg-blue-500 cursor-not-allowed {% else %} bg-blue-700 dark:bg-blue-600 hover:bg-blue-800 dark:hover:bg-blue-700 {% endif %} focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none dark:focus:ring-primary-800"
           type="button"
           data-modal-target="add-product" 
           data-modal-toggle="add-product"  
+          {% if not request.user.is_authenticated %} disabled {% endif %}
         >
           Add new product
         </button>
@@ -233,48 +234,3 @@
 
 {% endblock content %}
 
-{% block extra_js %}
-
-<script>
-  document.body.addEventListener('htmx:afterSwap', function () {
-    console.log("htmx:afterSwap triggered");
-
-    document.querySelectorAll('[data-modal-hide]').forEach(trigger => {
-      trigger.addEventListener('click', function () {
-          const targetId = trigger.getAttribute('data-modal-hide');
-          const targetModal = document.getElementById(targetId);
-
-          if (targetModal && targetModal._modalInstance) {
-              console.log(`Hiding modal: ${targetId}`);
-              targetModal._modalInstance.hide(); // Hide the modal
-          } else {
-              console.error(`Modal not found or not initialized: ${targetId}`);
-          }
-      });
-  });
-    
-    document.querySelectorAll('[data-modal-toggle]').forEach(trigger => {
-        const targetId = trigger.getAttribute('data-modal-target');
-        const targetModal = document.getElementById(targetId);
-
-        if (targetModal) {
-            if (targetModal._modalInstance) {
-                console.log(`Destroying old modal instance for ${targetId}`);
-                targetModal._modalInstance.hide();
-                delete targetModal._modalInstance;
-            }
-
-            targetModal._modalInstance = new Modal(targetModal);
-            trigger.addEventListener('click', function () {
-                console.log(`Opening modal: ${targetId}`);
-                targetModal._modalInstance.show();
-            });
-        } else {
-            console.error(`Modal not found for target: ${targetId}`);
-        }
-    });
-  });
-</script>
-
-
-{% endblock extra_js %}
