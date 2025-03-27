@@ -14,7 +14,6 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from apps.users.utils import user_filter
 from django.views.generic import FormView
-from apps.tables.views import datatables
 
 # Create your views here.
 
