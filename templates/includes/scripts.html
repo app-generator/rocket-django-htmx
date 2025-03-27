@@ -7,41 +7,87 @@
 
 <script>
     document.body.addEventListener('htmx:afterSwap', function () {
-      console.log("htmx:afterSwap triggered");
+        console.log("htmx:afterSwap triggered");
   
-      document.querySelectorAll('[data-modal-hide]').forEach(trigger => {
-        trigger.addEventListener('click', function () {
-            const targetId = trigger.getAttribute('data-modal-hide');
+        document.querySelectorAll('[data-modal-hide]').forEach(trigger => {
+            trigger.addEventListener('click', function () {
+                const targetId = trigger.getAttribute('data-modal-hide');
+                const targetModal = document.getElementById(targetId);
+    
+                if (targetModal && targetModal._modalInstance) {
+                    console.log(`Hiding modal: ${targetId}`);
+                    targetModal._modalInstance.hide();
+                } else {
+                    console.error(`Modal not found or not initialized: ${targetId}`);
+                }
+            });
+        });
+      
+        document.querySelectorAll('[data-modal-toggle]').forEach(trigger => {
+            const targetId = trigger.getAttribute('data-modal-target');
             const targetModal = document.getElementById(targetId);
-  
-            if (targetModal && targetModal._modalInstance) {
-                console.log(`Hiding modal: ${targetId}`);
-                targetModal._modalInstance.hide(); // Hide the modal
+    
+            if (targetModal) {
+                if (targetModal._modalInstance) {
+                    console.log(`Destroying old modal instance for ${targetId}`);
+                    targetModal._modalInstance.hide();
+                    delete targetModal._modalInstance;
+                }
+    
+                targetModal._modalInstance = new Modal(targetModal);
+                trigger.addEventListener('click', function () {
+                    console.log(`Opening modal: ${targetId}`);
+                    targetModal._modalInstance.show();
+                });
             } else {
-                console.error(`Modal not found or not initialized: ${targetId}`);
+                console.error(`Modal not found for target: ${targetId}`);
             }
         });
     });
-      
-      document.querySelectorAll('[data-modal-toggle]').forEach(trigger => {
-          const targetId = trigger.getAttribute('data-modal-target');
-          const targetModal = document.getElementById(targetId);
-  
-          if (targetModal) {
-              if (targetModal._modalInstance) {
-                  console.log(`Destroying old modal instance for ${targetId}`);
-                  targetModal._modalInstance.hide();
-                  delete targetModal._modalInstance;
-              }
-  
-              targetModal._modalInstance = new Modal(targetModal);
-              trigger.addEventListener('click', function () {
-                  console.log(`Opening modal: ${targetId}`);
-                  targetModal._modalInstance.show();
-              });
-          } else {
-              console.error(`Modal not found for target: ${targetId}`);
-          }
-      });
+</script>
+
+<script>
+    document.body.addEventListener('htmx:afterSwap', function() {
+        console.log("htmx:afterSwap triggered");
+        initDropdowns();
     });
+    
+    function initDropdowns() {
+        document.querySelectorAll('[data-dropdown-toggle]').forEach(trigger => {
+            const targetId = trigger.getAttribute('data-dropdown-toggle');
+            const dropdown = document.getElementById(targetId);
+
+            const newTrigger = trigger.cloneNode(true);
+            trigger.parentNode.replaceChild(newTrigger, trigger);
+        });
+    
+        document.querySelectorAll('[data-dropdown-toggle]').forEach(trigger => {
+            const targetId = trigger.getAttribute('data-dropdown-toggle');
+            const dropdown = document.getElementById(targetId);
+            
+            if (!dropdown) {
+                console.error(`Dropdown target not found: ${targetId}`);
+                return;
+            }
+
+            const dropdownInstance = new Dropdown(dropdown, trigger, {
+                placement: 'bottom',
+                triggerType: 'click',
+                offsetSkidding: 0,
+                offsetDistance: 10,
+                onHide: () => console.log(`Dropdown hidden: ${targetId}`),
+                onShow: () => console.log(`Dropdown shown: ${targetId}`),
+                onToggle: () => console.log(`Dropdown toggled: ${targetId}`)
+            });
+
+            dropdown._dropdownInstance = dropdownInstance;
+            trigger._dropdownInstance = dropdownInstance;
+    
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log(`Dropdown button clicked: ${targetId}`);
+                dropdownInstance.toggle();
+            });
+        });
+    }
 </script>
