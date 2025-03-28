@@ -38,11 +38,13 @@
                     </nav>
                 </div>
                 <div>
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Available Routes - defined in <strong>settings.DYNAMIC_DATATB</strong></h2>
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+                        DYNAMIC_API Routes - defined in <strong>settings.DYNAMIC_API</strong> - read <u><a target="_blank" href="https://app-generator.dev/docs/products/django/rocket-htmx/index.html">DOCS</a></u>
+                    </h2>
                     <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
                         {% for link in routes %}
                             <li>
-                                <a href="{% url "model_api" link %}">{{ link }}</a>
+                               👉 <u><a href="{% url "model_api" link %}">{{ link }}</a></u>
                             </li>    
                         {% endfor %}
                     </ul>

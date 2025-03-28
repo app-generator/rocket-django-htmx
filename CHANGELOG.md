@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.0.2] 2025-03-28 
+### Changes
+
+- Improve Dynamic API
+- Improve Dynamic DataTables
+- Update [Rocket HTMX Documentation](https://app-generator.dev/docs/products/django/rocket-htmx/index.html)
+
 ## [1.0.1] 2025-03-28 
 ### Changes
 

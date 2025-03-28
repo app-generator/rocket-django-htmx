@@ -1,12 +1,12 @@
-# [Django Rocket](https://app-generator.dev/product/rocket-htmx/django/) `HTMX`
+# [Django Rocket HTMX](https://app-generator.dev/product/rocket-htmx/django/)
 
-Open-source starter powered by **Django**, **Tailwind** and **HTMX**. The product is designed to deliver the best possible developer experience with highly customizable feature-rich pages. 
+Open-source starter built with **[Django, Tailwind, and HTMX](https://app-generator.dev/product/rocket-htmx/django/)**. The product is designed to deliver the best possible developer experience with highly customizable feature-rich pages. 
 
 A common set of features is provided out-of-the-box: **API, DataTables, Charts, Extended User Model, and Docker Support** under a permissive MIT License (**unrestricted usage in hobby or commercial projects**).
 
 - 👉 [Django Rocket HTMX](https://app-generator.dev/product/rocket-htmx/django/) - `Product Page`
 - 👉 [Django Rocket HTMX](https://rocket-django-htmx.onrender.com) - `LIVE Demo` 
-- 👉 [Django Rocket Documentation](https://app-generator.dev/docs/products/django/rocket-htmx/index.html) - `Complete Information` and Support Links
+- 👉 [Django Rocket HTMX](https://app-generator.dev/docs/products/django/rocket-htmx/index.html) - `Complete Documentation`
   - [Getting Started with HTMX](https://app-generator.dev/docs/technologies/htmx/index.html) - a `comprehensive tutorial` 
   - [Getting Started with Django](https://app-generator.dev/docs/technologies/django/index.html) - a `comprehensive tutorial`
   - `Configuration`: Install Tailwind/Flowbite, Prepare Environment, Setting up the Database 
@@ -21,9 +21,9 @@ A common set of features is provided out-of-the-box: **API, DataTables, Charts, 
 
 - Styling: **Tailwind CSS/Flowbite**
 - **Extended User Model**
+- [Dynamic DataTables](https://rocket-django-htmx.onrender.com/dynamic-dt/product/) via `HTMX`
+- [Dynamic API](https://rocket-django-htmx.onrender.com/api/product/)
 - [Charts](https://rocket-django.onrender.com/charts/) via ApexJS
-- [DataTables](https://rocket-django.onrender.com/tables/) via `HTMX`
-- [API](https://rocket-django.onrender.com/api/product/)
 - Can be used with **SQLite**, **MySql**, **PostgreSQL**, **MsSql**
 - **Docker**
 - **CI/CD Integration** with Render 
